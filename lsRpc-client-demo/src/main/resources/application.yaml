@@ -1,0 +1,17 @@
+server:
+  port: 8083
+
+
+ls:
+  rpc:
+    client:
+      port: 8990
+      env: "dev"
+      services:
+        - name: "org.test.echoService"
+          classPath: "com.example.client.service.service.rpc.EchoService"
+        - name: "org.test.helloService"
+          classPath: "com.example.client.service.service.rpc.HelloService"
+      registry:
+        type: "zookeeper"
+        address: "localhost:2181"

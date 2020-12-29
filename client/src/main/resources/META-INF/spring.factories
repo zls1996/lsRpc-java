@@ -1,0 +1,2 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  org.tiny.ls.client.configuration.LsRpcBeanConfiguration

@@ -1,0 +1,15 @@
+server:
+  port: 8013
+
+
+ls:
+  rpc:
+    server:
+      port: 8991
+      env: "dev"
+      services:
+        - name: "org.test.echoService"
+        - name: "org.test.helloService"
+      registry:
+        type: "zookeeper"
+        address: "localhost:2181"
