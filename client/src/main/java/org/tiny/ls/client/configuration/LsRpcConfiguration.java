@@ -55,7 +55,7 @@ public class LsRpcConfiguration implements InitializingBean {
         validateServices(services);
         validateRegistry(registry);
         rpcConsumerProxyUtil.registerProxies(services);
-        client.start(port,services, registry);
+        client.start(this);
     }
 
 

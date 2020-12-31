@@ -56,11 +56,20 @@ public class LsNettyRpcClient implements LsRpcClient, DisposableBean {
     @Resource
     private ThreadPoolExecutor threadPoolExecutor;
 
+    private LsRpcConfiguration lsRpcConfiguration;
+
 
     @Override
     public void start(Integer port, List<ServiceCfg> services, RegistryCfg registry) {
         log.info("start to init netty lsRpc client");
         initClient(port, services, registry);
+    }
+
+    @Override
+    public void start(LsRpcConfiguration config) {
+        log.info("start to init netty lsRpc client");
+        this.lsRpcConfiguration = config;
+        initClient(config.getPort(), config.getServices(), config.getRegistry());
     }
 
     private void initClient(Integer port, List<ServiceCfg> services, RegistryCfg registry) {
@@ -89,14 +98,15 @@ public class LsNettyRpcClient implements LsRpcClient, DisposableBean {
 
     @Override
     public void destroy() throws Exception {
-//        log.info("lsRpc client is closing, shutting down resources");
-//        // 注销服务在中间件上的注册
-//        consumerRegistry.unRegisterConsumer(rpcConfiguration.getServices(),
-//                NetUtils.getLocalIpv4(), rpcConfiguration.getPort(), rpcConfiguration.getRegistry());
-//        group.shutdownGracefully();
-//        // 关闭Zookeeper连接
-//        ZookeeperClientFactory.closeAllClient();
-//        log.info("lsRpc client shutdown success");
+        log.info("lsRpc client is closing, shutting down resources");
+        // 注销服务在中间件上的注册
+        consumerRegistry.unRegisterConsumer(this.lsRpcConfiguration.getServices(),
+                NetUtils.getLocalIpv4(), this.lsRpcConfiguration.getPort(), this.lsRpcConfiguration.getRegistry());
+        // 关闭Zookeeper连接
+        ZookeeperClientFactory.closeAllClient();
+        group.shutdownGracefully();
+
+        log.info("lsRpc client shutdown success");
     }
 
     @Override

@@ -1,6 +1,7 @@
 package org.tiny.ls.client.client;
 
 import io.netty.channel.Channel;
+import org.tiny.ls.client.configuration.LsRpcConfiguration;
 import org.tiny.ls.client.configuration.registry.RegistryCfg;
 import org.tiny.ls.client.configuration.service.ServiceCfg;
 import org.tiny.ls.client.loadBalance.LoadBalanceStrategy;
@@ -22,4 +23,6 @@ public interface LsRpcClient {
     void shutdown();
 
     void start(Integer port, List<ServiceCfg> services, RegistryCfg registry);
+
+    void start(LsRpcConfiguration lsRpcConfiguration);
 }
